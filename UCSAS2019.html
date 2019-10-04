@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>How often does the best team win?</title>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="rmdshower/shower-ribbon/package/styles/screen-16x10.css">
+  <link rel="stylesheet" href="rmdshower/rmdshower/style-common.css">
+  <link rel="stylesheet" href="rmdshower/rmdshower/style-ribbon.css">
+  <link rel="stylesheet" href="rmdshower/shower-ribbon/style-override.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.js"></script>
+  <script src="rmdshower/rmdshower/auto-render.min.js" type="text/javascript"></script>
+  
+  
+  
+  
+  
+</head>
+
+<body class="shower list">
+
+  <header class="caption">
+    <h1>How often does the best team win?</h1>
+    <p>Michael Lopez, Gregory J. Matthews, and Benjamin Baumer</p>
+  </header>
+
+  
+  
+<section id="how-often-does-the-best-team-win" class="slide level2">
+<h2>How often does the best team win?</h2>
+<p><img src="http://www.zontikgames.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/p/r/primary_4.jpg" width="500px" class="cover"></p>
+<p></br></br></br></br></br></p>
+<p class="black">
+Michael J. Lopez, Gregory J. Matthews, Benjamin S. Baumer</br> <a href="https://github.com/bigfour/competitiveness" class="uri">https://github.com/bigfour/competitiveness</a>
+</p>
+<!-- # An anecdote -->
+<!-- ## What we remember  -->
+<!-- <img src="shane.gif" width="700px"> -->
+<!-- ## What we forget -->
+<!-- <img src="xander.gif" width="700px"> -->
+<!-- ## Pitches in the series -->
+<!-- ```{r strike-zone, fig.width = 6, fig.height = 4.5} -->
+<!-- source("https://raw.githubusercontent.com/bigfour/competitiveness/master/config.R") -->
+<!-- temp.df1 <- read.csv(file.path(root, "data", "alcs2013.csv"), stringsAsFactors = FALSE) -->
+<!-- xander <- filter(temp.df1, player_name == "Xander Bogaerts", events == "walk", inning == 7) -->
+<!-- p <- ggplot(filter(temp.df1, stand == "R"), aes(plate_x, plate_z, colour = strike)) + geom_point() +  -->
+<!--   xlab("Horizontal pitch location") + ylab("Vertical pitch location")  + theme_bw() + -->
+<!--   scale_colour_brewer(type = "qual", "Called a strike?") +  -->
+<!--   ggtitle("Right-handed strike zone", subtitle = "2013 ALCS, Red Sox v. Tigers")  +  -->
+<!--   geom_segment(aes(x=-.8, xend=.8, y=3.4, yend=3.4), linetype=2, colour = "black") +  -->
+<!--   geom_segment(aes(x=-.8, xend=.8, y=1.6, yend=1.6), linetype=2, colour = "black") +  -->
+<!--   geom_segment(aes(x=-.8, xend=-.8, y=1.6, yend=3.4), linetype=2, colour = "black") +  -->
+<!--   geom_segment(aes(x=.8, xend=.8, y=1.6, yend=3.4), linetype=2, colour = "black")  -->
+<!-- p -->
+<!-- ``` -->
+<!-- ## That pitch -->
+<!-- ```{r strike-zone-plus, fig.width = 6, fig.height = 4.5} -->
+<!-- ### Note: Using GAMs, 81% chance that Boegarts pitch is called a strike (not accounting for superstar/rookie/home team effects) -->
+<!-- library(jpeg); library(grid) -->
+<!-- image <- jpeg::readJPEG(file.path(root, "nessis2017", "xander.jpg")) -->
+<!-- p  + geom_point(data = xander, colour = "black", size = 3) +  -->
+<!--   geom_segment(aes(x = 1, xend=xander$plate_x+.05, y=0.3, yend=xander$plate_z - 0.15),  -->
+<!--                arrow = arrow(length = unit(0.2, "cm")), colour = "black") +  -->
+<!--   annotation_custom(rasterGrob(image,  width = unit(1,"npc"),  -->
+<!--                                height = unit(1,"npc")),  -->
+<!--                     xmin = 0.2, xmax = 1.8, ymin = -1, ymax = 0.35) -->
+<!-- ``` -->
+<!-- ## The truth is... -->
+<!-- * About 80% of pitches taken at this location called a strike (using advanced modeling) -->
+<!-- * Walk worth about 12% in win expectency ([32% to 44%](http://www.tangotiger.net/welist.html)) -->
+<!-- * Red Sox were lucky! -->
+<!-- ## What we also forget -->
+<!-- <img src="jose.gif" width="700px"> -->
+<!-- ## About that error... -->
+<!-- * Jose Iglesias: 98.5% fielding percentage (*Note*: Statcast data unavailable) -->
+<!-- * Error worth about 20% in win expectency over out at second ([36% to 56%](http://www.tangotiger.net/welist.html)) -->
+<!-- * Red Sox were lucky! -->
+<!-- ## Summary -->
+<!-- <div class="double"> -->
+<!-- > - Two huge swings in win probability that were outside the Red Sox control -->
+<!-- > - Red Sox were lucky! -->
+<!-- > - <img src="max.gif" class="one-col-image"> -->
+<!-- </div> -->
+</section>
+<section id="using-statistics-to-assess-luck-in-sports" class="slide level2">
+<h2>Using statistics to assess luck in sports</h2>
+<ul>
+<li class="fragment next">The main goal of this research is to compare the competitive balance of the four major North American sports (Football (NFL), Basketball (NBA), Baseball (MLB), and Hockey (NHL)) <strong>on equal footing</strong>.</li>
+</ul>
+<ul>
+<li class="fragment next">The best team does not always win.</li>
+</ul>
+<ul>
+<li class="fragment next">How to untangle luck from skill?</li>
+</ul>
+<ul>
+<li class="fragment next">How often does the best team win in each sport?</li>
+</ul>
+<ul>
+<li class="fragment next">Luck —&gt; parity</li>
+</ul>
+</section>
+<section id="how-to-define-parity" class="slide level2">
+<h2>How to define parity</h2>
+<blockquote>
+<p>the state or condition of being equal</p>
+</blockquote>
+<p><strong>Google</strong></p>
+</section>
+<section id="what-parity-looks-like" class="slide level2">
+<h2>What parity looks like</h2>
+<p><img src="Joe.gif" width="400px"></p>
+</section>
+<section id="what-parity-does-not-look-like" class="slide level2">
+<h2>What parity does not look like</h2>
+<p><img src="kp.gif"></p>
+</section>
+<section id="parity-checklist" class="slide level2">
+<h2>Parity checklist</h2>
+<ol type="1">
+<li>Equality at a fixed time</li>
+<li>Within season equality</li>
+<li>Between season equality</li>
+</ol>
+</section>
+<section id="prior-work-parity" class="slide level2">
+<h2>Prior Work: Parity</h2>
+<ul>
+<li>Noll, 1988 and Scully, 1989,</li>
+<li>Gini Coefficient (Mizak et al. 2005)</li>
+<li>Use win percentage as a proxy for team strength.<br />
+</li>
+<li>However, these methods have some undersirable properties.<br />
+</li>
+<li>For instance, Noll-Scully increases, on average, with the number of games played, so it’s hard to compare across leagues with a vastly different number of scheduled games (e.g. NFL vs MLB)</li>
+<li>We need a better way to measure team strength than win percentage!</li>
+</ul>
+</section>
+<section id="measuring-team-strength" class="slide level2">
+<h2>Measuring Team Strength</h2>
+<div class="double">
+<ul>
+<li>A simple ways of estimating team strength in leagues is the Bradley-Terry Model (Bradley and Terry, 1952)</li>
+<li>Application to football with time varying parameters (Glickman and Stern (1998), Glickman and Stern (2017))</li>
+</ul>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARAAAAC5CAMAAADXsJC1AAAAkFBMVEX///91SH9zRX1xQnzLvM9+VIhzRn52SYByQnxvP3puPXnw7PF6T4S6pb76+Pr8+/yFX47v6vBrN3afgqaAWIn18vbk3Oami6zo4ene1OCRbpnl3efSxdWYep+LaJOHYY+TdJq/rcPWy9mxnLbGtspoMnSsk7K7qcC/q8OtlrOjhqnLvs6aeaKqj7CXe56ynrYxnRHlAAAgAElEQVR4nO1deZ+iuNOXoOEQQVRUbE907Na+3v+7e8gFlaQCOjO7M7/ns/XH7nQ3R/JNpa5UFYPBf/Qf/Uf/0X/011BaVlWV/ulRNJQt6+EUf3AAxWk/nU5Xf3IIkLJLPZzDfPznRlAeQkIIHf65EWhULNhw4sufG0E1op5Hvbc/NwKNxsSrKT7/iXdnk4+Pe/lXAhKdi8+Pj+vLv/vuz9j3o8Pn4m8EZHKoBxcf1//qu49h/epkM/0LAfFX9aA8Oqr+pbcW1bZapkfyFwMSCEDyWgf/82ySncM4Xmz3fz0gi9d5FP8LG6cI67dGK4bE3w3I9MgkfnD6x186q98Wzhd/JSAhBGSfMEAm//hLJSDe/wQg9D9A/gMEkA7I5t8F5O+XIf8yIH8vh4T3P7Jl/mIOuf+rHFL8r3DIYfOvqN3LJLQACf4uQCCHeMHu8s/aqp5YBLhlPLp6/P5UD2f1xNrSfF0al2SDrPlNViyrJfhbGUMZwgHxyGj7+OgepBwETbcKEPa/kQRk8TbMH3pSeTkfb3I+y8nn6us4f++6frs57ne3Vdb84nqf3z7n6mXb4366X8kJp9VpJwa3AluGJup9g3L39f1boovV5nA5ryZnQdxd8BYJ+28w4otQs8roMD9Peuh6O29Go5CsxI8bj5AwDDcdd5yPPiXEi2/qFzefhPUcr/LHY0TqZxz4vz/3YkyMN/h/kxHHJdmJcU+uhyhMyt+Bx8EnHiVUkodSPW7aR6QW+h5bNO1J1Ou4RVyh/4K2j9CeQBxD88DNwW8AZLmP2Dv/f1B8yfpn3EPD8DE0OlfaYArIaA9c7xksoS26+qljYF6zotHnL5+Y5HdfPrgWGDWN5A/GS0kYjPopEINj/5T7vZY+3XfoVyVictqfqfhj4ocKlUD7X8LGLe/0J798qFaFatKj2/ByuQzFnHiswUumAp9gsV+9DvvpM+J4sH/exHOS7ttOG7YcNDirB4RsVruL+vucCaUT/+fldpwKCMiG/3/EhSxNVnzYd24+7X7dJtnGigmCCdt/Q2CHUGWHHLblQ/psOa11lD/nQEf8OZPuPZ29L9j7Glk4rEdDjq1krA7EC+S/05fqUxhmn8AOocGVD+1aI0umvyHuvKVEIkIW7HFJLAHxACC3Bx+WvtYjnnHL48KeE1/6tnQ6rKfcAnKONDwG6TykQfvjkqMMvd1abAjDbFNrSnr+DafQ6WURy60ZMoOouvgmINR72F+oaI0rW7ExY2Ea9Yu4JQvv07NkpI/aCvmGf17Vo1k1YdMxVwC6+3/nh9/pgnjk8DuskEH2cg2kXKX3QnP/fwKQwItPbHJrtnm8Wf+WvjBJSfbcNi0mtVRIQNQ4PY3qOUc7te/seIhy7nIGTvL5mD3dS8Vc8oj/Oobe7k8AEnoz7nxUXOrHvV5hPueLkbyxOZ+Fjmp9k/yLIUD2Clc3IIMDZ+zbb8pTuEg9TmfzXwWE0nr06cdMbMKPnuvzeQzk15cQ6OBw/5v9hi4URB2AFCO2R+PV70mVWCuzgya/B5CpkNThpu/FR6H1+fYfix8S4A5uudMdvMofOwCpNyn7Yzz/LbumSJQhOFv/GiCRFzJANkRaDD3XN4Ds641W8tPClh9qyvnfw6v8sQuQ2gfhiGx+R1ZA3gASTVINkMNzgLzHXJCmH3Kei57r1wo5BohgB7KHumLF/h7u5LLbWgZGzMoDe2s0/R26ZqPsVbIvfgGQ7BRzoZrexfNo0ONrrfeKlWoYT1wQh9pp7Sv7XWNwjSMAyME8ucuGI/Y0f/H+6+bIm7JXPbqMHwekWC+XYM9mZW1UxMP6H9dIPq1H774cJCDH+jEiFOPfoVyUQkSq4m5ABumEP4GMXn9GtGprl88UIGTC36lMdzcgRb69fm02m93qtM3VgCImH18H2UQAQr2e8N5SSd9jMUhXXAOHVziyNUcsvBY2IPWWYVhBzZ7POWeS5PYsIsXb7vg1AYs7UgY8/bjOojgess3dAUj5td8viM8CWn6ymAtGSM8MB/9Qc7/gOEo1QySvtqWuBJYjIbzCXTrIRYCQaJZqxoWMkisaIIvJvh7pQuPBrQBYOTgPUzUNSEiC0aZR+YrHa+DX75NJyRNm3IAME5ac2Gwz/y4sTf4U5ty9yy1IPgGG8wXz0w83MIVS6vvwK5NKRrNUa5pzzUPfEUCq/PR2MSYuI6CUnJ8x0S6xwJGGySkvuS9QNnsmECAxMesEpEoUQwmKxOuLVSgBUY8jR3VLdp+FPDZYs9WtEXqlBM6/K3FBF3oO6E28QOwZBQiPMi7Keo9+zHdDOHVpy9Tq9/S4ZN02k69Nu9lsxkR42syQfPGLrsSveWiRYIDkex0PL37l+774ZFIgqn3jtQLkoIa1/QEYSiGSNZy0qpeJc4vYHdl4e/68fY5G85347WHZAhJN9mFNu/V6H4e+P9tAPbtdSB4J4flFJ60DPRxHGA9nH43iFT5jcdt9HQNu0luA3Mx4XiQCVcWOA1Jfnau5L5SZ9OG3lzdHKelEyhqvBvFVRFCO9SYYT5JZFEUhob4cVvQOAXmZf32tynIjxuGvoByZyLiaXKR+ynahp1O8WTZ6oaZEGspZtpZK0du9w4cvTQYhB2EnjPnqsETjXGqP1lPTVkFZ54KlPK48hQCqpUktXu+h8Qa5ZwQgLHE3ywbFXQ05OkLLYyKil+HxwT1TJeb6etG8HFSNJRLe1ezTs/xlfIT79GI+QUXucm5IMkOkUAyn3JD0B7ieelJOjNVltSRdC783nGfpt30KQKbsFeOEvWEmpNz20KDmx616X1+4LKr9qAcBuSFnDmRaFE1YmbSm4nolVAm3rBt6NVmMLgSHCFCZTCqU1iJzge56Bm+IJEz5QnrZo+FgKaz4WiQvN+YL2C1c0p1G9UYShvx6DpjOn6vZ10aymImIyzxAd5Mb2YDCfNI8HjoT43PA1d4IuOTZObJu51sgE3KC2+4nJS1lFGupAeJ/Cm1ZKYO2RrQUu6xWwBIanYRIKJZlKU2Z9Q5eFaoxK/ali0fjzSvkhINej+028I/AeErfEjZLH+Tbp1cTEC/hHFuJWOQsHwyaHUhlPDbXACEbznHpUYXqpstBJbilNuLLAwJIZMZLywWcSFMhMQ8Vxo/GAd4C+22LBRgC0YoNsjUL9oSrdjjp1TfvF4CIedCYyZuleovitxgOXzpwFyW3yGHcADKtqhGyZtYOaI4LOIlQ/0C6x/yGR5MCiimCPyCyM4VRGVPocWU3i0Mixs/VTE6O3Z8rA8kLhbzQtkHErVGhM/g9G+a8yytOKCAz84RB13UqNr9u3hM+HBfZduKBpQZ/+D4MRH1bgPhMzUhLg3AVrSwMJu359pjAmwT/7xWnUTppjxDDa3lEliww57fWzYeZ0INDBWa4e9x2XyFCvCGCCKNzpB2JvVrjJfuXwVLOVZ6ubtUqU8K3dwmFCPNegSgiC3bPRZ3LTRChKuPygPJrAi+YCXOy2TFJZ16KTpfYel9LEeLqb2MtjHVJrJtuRTYXEkRlaLQc7XOBkULLLBjWlnA7axGcl86dN1oE9pYJ75b7Wmq4/eCnMxMluvxnYqvVTCg4jFEiS4IMmBFBRwDwytIC/qp4F2oqUmHvvOVDwnMUgHFR26/FrZ01GfF3puqOxQIZ16s1rvQKJ/CDob5tlEP4TPg9uy+SkES7ua1vIrTaoph5BEiW9dGEMjqt5b5PGtn+2uwIf8NWa9fqJrLZToC1q1TmqxzPyOJAXGdAe8i/r5kYan4TPXVCky+Hh/1l/WkBwmQBQulMe0FmCaFwKHk1bDn1vZkW5SctQCmQ4xXoeSFBBi3nBUkzsManwVKDhiOw6xhg23ZC0ZN5EdmyzAa2MI/xetQsolro92z6y/OJmktr0ZYtAmRxGbwBjyEcQcU6U/cUkvNaQML5RkraA+LMF6117cUViIXU5D8hUxUNLXVPE9zcPfu1ngd6Rr+TLi7lTp0mtAuZf4E9MgIY0sUO3k5GDVPdpOfeLLS/2qgQIzayrDUy42FR3NsX/kxBXm5JglqUoxtvO2OjApZRNdWgpIupnIk/d9hvFHqUwQjeDeIWDdBNvmEgZ+wSCR9NKHiUJCDtSvoGT9HJFl0RDquIsMXtH1+NW5uRhDBAPOkyd9qhA7tnjDkxYmSOYu4LYArtqT8ByM3ySGwHSpDwVNsEP1vLKNICxBfMAkfeCdZ+5wIkcIiEseMV+vHfQzS+27OiHvqYFwFI413ZwkcNQ0tpss0VhOgIvvLNkWzoToWZ42tDnz/PFKkXBkUrjEXGPNolFdl4Xa5cswth4AATUsgtK3hLiXji/CpnMl1p+VUCkORpobq2QquMCGaHZBwQf15Vl9fX1W7qnB3RiwQ6fSZFmnAo7PAmJ3kKgdDYAWHwdEUAyiE1izgB8Ub7KYmjMHSmWHuJnjA0cQwWkLnXHbuMvA4cdEX8Ho+ddDwPyNwWqjWFCG+qADHpSCfmoxjpdt120StVfaNXCz4oLWVEp5FDToVPA5LiDB192pdmP7ArMUB05Tg2jysQMoIvE1QkhK569mzl1NPPW6o3FBDqIbHqrnABJLPc697HIepAp6Et+iriyJNNsYC5IIcT0kUTfAOEyJPmuCi3770b00PcVo38lQG/flohybVj8p17XD9RFuGwm8jdvnSdPGBRePaCpz3hW/Okn/vVyGOxGA3Tk76bA+PnqwAcdhM5INcOF1Ho1xTWOsatZDxKjD3To3jtaAMGiKMSdd3BH8/GQ8QDsVAuP8Szr822t9X9fp9/7Y6bw8KtTU2lse3ea2RuvgiVIQmW/lt8d0o2JOTYRxlu9ZI9fnkxHo/zfL1eltu7swDL/9IjmWk3h1g7Ble79mUDlTvuBuTj+XzVKy5DsC2jE3qyJgAxQ7ud7gxdmC5pjlqqCebqVt2qr00Hf5zeUB1AFr3SKPt0AmL6QvappwaIuYoXTPNRrDC3OTx2Pvt5/x83JB85E3WZoPzASZ9h17CJ9SrUrmC5UxYVnVAz7+55QNI9tsMfOjV3xC1sg6HE1GgDiCW/UTlPpsgSNQkoLgp/Ip95jVkidPQAtEPc4mLZPzqNnwMEy4PAxfy4z8SJf6ba7AN5qB6xcRE6copIvy7j3QYE3TKYqThY94UWfqqCF2O7hzhkMMTUI9nbJkyXf2cDcsEUuiWYGHXuRUbRU4mqkrB1pqNH9FWKGWdYE4kV6s+7ABkjmxhND896lAwLsv1EvjtmJTyYeYOtfIDYC10DR4xiJNDrUYRlM+xC/a7RT1QSYYKJLh5iNWTl0WOuLtZGAEFNd2RAvW5jLUSeVzMZpmXI9KF7rcQ7R7VQ3tFZAAEkt/GDdbsNFVFvMO7hLETwdhQQhy9j0MReSrSerCuBi0ytbV7YwTkUZzRuolObqfkwlZg10VsmJwjjEAzKFI+SckLEFcIhqHNVqeuoU5bQ5Gk1c8FUBdk9dO+nDQjFljJDWKm9wRI6SwQQbIVOTdan24SfPW283zBXCjWDbMLO/VC5vnUzN2IDVgggGOMpgyH+RDWD+NvTvbVQj4Rc+28c4CZMgoU+u0xKOzEOcQaxLaNwCw+FW7H7fVXUJhWoFUkea9GFnA9RD2svnndIVbs/GnIMQUf2QyV/8jP+tetoBruxk8opprrI4RFt9YJpU1T8jDukqmdxI2rY2sJRYsDzqFJEvguaPSlV7exKjutDSfNv6MHwHlF0aUfsUxZvAULqICi1d+JUlqPyoVauGK+V/NxDZqbYM4Dg4sdKrmX03gHIxlxDLPJE7MNEnrJHQ3HUkO8cPBg92gdGEn5G8EBM1WVukQOWO+BKcfCQtI8X1BCwGY8vpfJnnY7eQ1MBk0KP/2vz8QEDDw8Q4Vkqa3cEwKzAdLj/dgKdAETl8lauA8LwKf8ux89l2rLBDvrEcxDQI8e1O9hnHUHhMVXPYn0enG8O55ynAOFTlohVSigp6T8mdhzrq0ozAxA0uibI19VMij83PJqihiPQeG9OQB70y7oBeaSFrSPqjkXM6vd0nM00fTDkzPDn0qnJeVw7NxkPaH0Nv3H0TC8RF4c80Dx16AAEF6odyYhGAhGSKcpH5H0bz2TNLFrR8u6ydChqO7vIxcrk2GuZXUbonbgM6dAyZs4RfpbIPHmD9Zjp3qSiFmenYn8KkDGadffQIeDNsQnQQ9iyq/mkljyW4XoPyathTV9kAwbZ7AslGjzzrSLHYXdXQpckF5RoR7yswzBrG4NwcotfK1pb6902y3h9d+2ZB113Sa78rF6pWrosC6zOLe0IiLD9CYIW7iQ9q8yrNvHjps1iYVdFqsdb+RZdhJvu9dv7YHUOHGvOiGVMt6QdZE8cA2Lq2UD6GsGiATTSxQf0aP0/J4dMD1GPBBLuFTJCKjrzDjPEUwWrnAr3GY6VyXyJvei7mezFldX0XFKE4/QfO13R6eTUG0hq+Lo7e7cRjR07EXF6yllTLt+VCdAvDyEtUQ/tATPEzSGaSJBD70lsaXMd3I+19Wc+q9Wusnoqd4IwqvdclOInmf3xIYcZ4mErknVmiHjA3rR7LMCrDLYdzzxKZVOdrojLw51gOWGJQDTsPxJ1awNZtAwI6ZxgTFXJy/Tckd9oHl0XMWXtytb52MXpgtpeKI9QuUdKd/1+3w5tZ6EGbggRlA0htXKvQ4bUasb4wgLrrUC849e96Dz3diaFOxCphnbVOpLsblBHIYxe/jJwF3w0RJtUH3ehVg2IIQt4f8JotPlYpZ0Z9ZaN20eF5Xk94DI7Mlw5IKZ+7D9zjJUQcSc32mW47IQvuJZ5Xgzeu/P6nsx5t1O1HggQdelHs/hv2Fs4MFMNn7boKYAgM9+zxjkUYiX96IjqO1I6OwjrFtOrqTrqYKwootOqbu5oMpbeu+IERiFzbYdI+b2OO/dkv1WlE6IV+x2iDoPBqnXrXj/2uo1a+y5AvEB/7tynsrFTtxajT38o0bab7LMBk+z+Ie0AzEqmS29lSdMpxemRMIq1U8/TzBsthLjqroWlZoVSL9mWNemt8LQ7zLgGXgsp8/nW+Jv8yVOXgtakaklp+DVhPWktoU02ehk+dVbrOSi3RXufEEF6EIHpGdmQZsJHdPAjX3tlEyvGy8vUfcDfzY5hQm5r3hTyTefwmkM/9BLvZwFBjl77zv+RLlVgekbjEyO/IVhtz9ebZqyFsqTEHdVg5INwdHaM7ko2GFrSPxa3XwOksD2IvoTGoqssyLSxdaHtf6wHaVFouljJrNwZ9xJXtYAUh/1WWqCZ2bjj3TjsehoQTM301M07ClwlmkarG10JxEO+PZbQfKWBuKPLUPVkL0QJyGlZyJ9KvcqM8ZEe1H4akKb7HqAeY6YTENOC0lhaWRO59luZ+tTlyhg5n+2uNDpQMNskTX6JQ7BjE988BtEJL5KXZHpT2tPVftL3qawodR43yQejGWN6FoLohwWd3+e1zODFXpielle5I1zPiTdob0kvKmzCPFp+biTadL93eP/1zCIMEDN/l7P2RgPk6S9YIxugx0V86drshgzR27k1np92Zhl+cEB6IkkzTLDp7B0euY0HJ/S8pYpqOyvMo4/CNF0oKF2N9Vs1MwGcpEBMKW9jNu5S5l4jj3XSG13KrpYwY/QnAMlONiDdRa8AEBpGEUkWh2PjqBqdkGFyD6UNWGOofER7TWTr6mO6IicKWitUFb88/xogg3d7A6BNshpqG22Qw+f35HR5r9ZnNRujIx00Eyg4tXmFq8C/U1T2tJ7AUgsyLTBDjmK3Qq78GUAQ6U7DrnKkVupEEzXIJiKgG2ZLuGOgAtpC3ciT42rd1Y0Ioma05KQmr+byi4Bg+t/fdeiZBhBQLtkIhfATClXN1w1vLcqaYObZldn6u7PdCJ2drUXSAjPNIeD2FwHBzIrOTJMGkAhEflXPK90O0QSl5jSewUtnYiadGa1hsrKHpJ09koPkTajZfkLtDlLMqSIdQqQBBCZfqbMaMoV3QrtJV+YwXijzSVWLF8Ia3BvM4q/WiEw9azapCmzlvwgIlvpHow53RrGUDwPKKh9JLyCGClpPDYCRe2liSEDo5nzfB3Ec+aEfxeIrFo4Oa/AwmDbtnWDNzU9YqlmF6bsuQGSfDQN8mUCoFXWmYI+buYRgMtJ2kU04hSdVVJe3yduwykXfRLQdiFaLQ5Nm/8Io6/Pu/ylAu1W5AUm/Ze9l3Z69yQFA0x2WbNGFHksDWUiq7xFvAmSayUIfhVjfLi1xB5TVwGqAZwEZf6NdWjq2THpKVCNIbYySQzSbDrbcIXs9LgB6eqmv4XEZScyzNrG3CPJ1FM3eBdUxkHHC5z7z5opSub9Fkr4Gcm/oxSBKhmilf7AlnpnMAzSESsHmWpSYn2UrBSBIP9AX6MbN2olr8aenDmayq8uhwmpl+R0Tj6gV1y5R7YNhd6gKts/3jIEBQGgifiW6IlkzEOa/b6drwcRSmNeuHZ/6z3yC1x3WdTWbODUaSS/+GauQAIi6ZzDL0ipJhQldofiVADU02vZIQ4vancmgSRlDCa+ntT3eBODizOly1btXgRqCcXpTqcAEAEQzgWdm4ghouU1j8SvhEFnBB9Gb0gs35sTgCyIoofIDEC7h5lEpcnGbyuSAAlJM1YtooF/QfGElaif+Cqwr6yuimsr8IX4nrV1q7JlMGFp0Zk4MtDGVMRVFW6g5owdZ5OKqVfOcyWptuN1Y8HHzl7b8SYs8ReZkNJUpAFHNwC0jTO1G4yA/O1umjCJNWYgvIvdRdgo64g94j6c2PmUWPDYpNKC2pQLhPbMFnpFS8UNrdG/1qJcyMjLOi2Dejm+Mt4Ty/KGi92Fn8zq8b34rB02tXKrJg3RBmCtpHnAaWUgGIF8Ge8pLzVV4B4rbPI8uoPPYfkrNTbpG5DQCqXRoN5L2a1/RNTMfJycffqjJpPAE2G5KqklcAUjmAkTyv5HKAz4zZmumwVbrHN9b4720+jGRKfxmR4xZM004hlg6qOGQlrWgCEGiXQggSqhaQf9KfbVZ+y086YtuJg/oEqwvF3Fstb8kyfsahEoJFnZvhIL9mYFmetG34h0YikbioTog4qZvaoCqhiuEiLLfJEGzDHGGX0H8ufezv1aSCQm2gxdgOqKNmVTZEPIBiTbI1LDWFrAsEjHXARG/k8arncko4uhGIxF4BIF8CUK3grpNkZO1X1h+DkidwVNEZL9RGtpCW6ndNo6sJUsi4SZNqM7E7yQLRpaDWvL2KQYgsH4Z0SMpDJagIqB9kpkpSRkecAaWg8VJLmC4sW2UTErQNoAILQHMzNMcs0j8TtQJ2Mm/6g86ILATZ/xuK1aYb+139QAprcTfGePoApRx4G3URfVGzSDI3yTTtcICCjUfaeUJ7ZBmpl/WV90Fpa9ssQwZAoPr2LEe/MKpcauBh/W1HL4BYes4UKIASDRxxsGS+WHN9+i16ijsS685sFQbmcc/0ogV3ZRsKYjW7QEWJtEE42jtFMupeIcjS4AIoZ6DNkfoyV0h1hyP64tSbzAXCAj2DQ5YV970geLpjdh3LvjT9HZRY5C2Q1D/DSRLGl+GBlQejFA/pXLFYfZa/I2YdkIM4uJFplSCODIABNVZ0LlrYhn8DNxsUsuI50/ogMAcE/8TO3qFnUtcuaZjs2iJNusBAbHl/EDGs/CmKeqPoBgDAEIQKay1YghVOJS3eAmx71O8h9SwVGHHXUffQyCmXAnrW1PBtOlTGiCo3GRiwpWzKQABje7BKaP/iTlG4AyrdVLYOU6IQc40gT6pJTz4x9M33gAgeBMQK68N+GJ9gIj6HvKFO44CEIAWACRCnU0QdW8BOVOkSS0feb3D9HZVoAWxEc1sxwDUKdbRID9/GTnZBOzuHGix2AakeOOmuCtky2M10GUpW17EP5ZzbsNHzYc/B8N6T6JpsqyvjgYITBa0alIUtbuKBrY7k23MciEK2wWOYUh/YpvaPJxEsR7n7Nnf/EilBSRts04cH8sBNal+U+a3Dqwvbki6EBpCQKDhh+5wRsBFQVj7arUP1MJesHMnciwkhKSzUSK3VIFFWrR5aLhRA50vEPkZUUchZa3GdEBaJYM2seYE2sTZDtjQOqDTDXxomNmLmgmlTo74m8V6AQ4Zt+O1ipAFgWMI4J1/hHZvDE6186xtGbB+HWVk7b61K4msDuG+HkMoNtDSNZsPrATWMS69MhHupW11GnAEHF8PgoC0euUaOXbYy1EHZN2KEP/bGSEE2VVmyktmloVFR/2CAqSDWZifZOA7Rl+bDWV8tgUka3t6+HgrgVeUQyaxI4+6NvVhBS2UqbjQ4bSGHry2yKnRUoIme5MJgAQKjRrITAboHYAs1Z9BDbRyzmmIy4QMfFweSKZb5MgJZYltYI+nbcMz8xRdmxTYMzpu5UITITS5LQ17MBu6FXshhRMOSONmgePbQn3XdLS7oDsG+jLAF/3wvRGq2VkICjjx6ahDOoBJfarUCOrrnLf+JDA/LUA09xKqGT2XsJHWMaYwClVGBhq7VepEfOsSeLXSaw41Wje2luwBmsDAvGNwmJG2KjPqqlVY7mRUJDhWOgeMh4u4KWdCO6/AdrPGx0iaFqB2dHsANWCign+pdO47gpnDfSItkWDT8kT9KNz2q4WqZruf1WiDXdVxyJDl70JZ2OZetr7GPpFDpzaqWp2I4f+3aWwBwp7g81+JPL4oI5VD4hxqmitHwt+2M/qsLXQ723AgvkdNk4YDt3sloxATVCMVq0R6PKTluTrLnUOOpp0CtYwZk2j9HKxlCwCEyC9ZKwGNfQC8JakUCTjFrv0DPALFnaUmJ+Gljer0dbOQafVY2ImTPNGlNLnrgjPXUghocN+2TJK3aWzB3YqHFFqs7s54Tx0bd39LTPFk1KDMjCVc757YcqnA2Ds4dqQ9BXEqLzl0cdJ2Ko4YqT+bXsDuM78+EcY/RvOLSIaEiY5RYp4p5B0BK2kAAAH9SURBVJoCC3/M06IRwp2ANEHAWGJQMSBRQETuKKtKzopyF0EF0Q1IIwnc9my5UTnUJAYW6dhOjqB+PDtUmfqcqpqxudvMXvazYVN5OOvM3mnbNfvs05aZOIZAP5XL15l6k8H4Gs9gWhwNu/suNc1FbCHR0Ho1Yl+8ZOS3tqVSrURnlIh9Y3n5A3wgk5rLPpwRSim4IMoXQqiSjmA3G+yu0bys8XHJz1fpCPFdpalDT7U+19Co7bjuHLKm2KOrcUY6/F6xz5EdFqNW/S5/sFfRZDMNVGEtrRGLmW3xstsdRxH7slvIkmkNy/AynS4W0/0ijCNOs+Ogmif15VHc01ct30htRMNdKo4yqOlScCpuMSFhXPPONpY7vh5dlHxdX6ueVIdtxNKiaW2YdZ54F+vlsqyqbbtdx/NDbRiEm2X1/rqbBoSyOpjN/PxeMG2+ftm+3lb33W43X70aI87Zg6qyurzeGJ2/6zfn75Pr6nbqy1Sp9qMkCIJktKgNnO0ijuNogxUKZdvj4XCc1A8ud4cRZQnOwWJze8/78xzKzWKUJPVcVs9+xWtc1hOrGIwZm2JNZfkC3pgV/LNu+di5JFnBSXYGGo/7e0Rny1K8qKxHW5Tvp9P2BX18Wi/gOhP/EIOrypeHelCnL/XT6zcs85/4AM8fp+x/cdD/0f8v+j/TYl6Y397cTAAAAABJRU5ErkJggg==" class="one-col-image"></p>
+</div>
+</section>
+<section id="a-cross-sport-model" class="slide level2">
+<h2>A cross-sport model</h2>
+<ul>
+<li>Extend <a href="http://www.tandfonline.com/doi/abs/10.1080/01621459.1998.10474084">Glickman and Stern, 1998</a></li>
+</ul>
+<p><img src="glickman.png" width="800px"></p>
+</section>
+<section id="challenges" class="slide level2">
+<h2>Challenges</h2>
+<div class="double">
+<ul>
+<li class="fragment next">Problem 1: wins and losses alone insufficient (noisy)</li>
+<li class="fragment next">Problem 2: point differential non-generalizable</li>
+<li class="fragment next">Solution: if you can’t beat ’em, use their numbers in a statistical model</li>
+</ul>
+<p><img src="sportsbook.png" class="one-col-image"></p>
+</div>
+</section>
+<section id="betting-markets" class="slide level2">
+<h2>Betting Markets!</h2>
+<ul>
+<li>Instead of estimating win probabilities in our model, we work backwards.<br />
+</li>
+<li>We assume that betting markets offer unbiased and low-variance estimates of true probabilities.</li>
+<li>These win probabilities are used to estimate team strength.</li>
+<li>Betting markets are efficient (Harville, 1980; Stern, 1991; Carlin, 1996; Colquitt et al. 2001; Nichols ,2012; Paul and Wienback, 2014; Spann and Skiera, 2009; Gander et al., 1988; Lacey, 1990)</li>
+</ul>
+</section>
+<section id="moneylines" class="slide level2">
+<h2>Moneylines</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Team</th>
+<th style="text-align: center;">Line (<span class="math inline">\(\ell\)</span>)</th>
+<th style="text-align: center;">Probability (<span class="math inline">\(p\)</span>)</th>
+<th style="text-align: center;">Normalized</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><img src="tigers.jpg" width="125px"></td>
+<td style="text-align: center;">-127</td>
+<td style="text-align: center;">0.559</td>
+<td style="text-align: center;">0.548</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><img src="redsox.jpg" width="125px"></td>
+<td style="text-align: center;">+117</td>
+<td style="text-align: center;">0.461</td>
+<td style="text-align: center;">0.452</td>
+</tr>
+</tbody>
+</table>
+</hr>
+<p><span class="math display">\[
+  p_i(\ell_i) = \begin{cases}
+        \frac{100}{100 + \ell_i} &amp; \text{ if } \ell_i \geq 100 \\
+        \frac{|\ell_i|}{100 + |\ell_i|} &amp; \text{ if } \ell_i \leq -100
+      \end{cases} \,.
+\]</span></p>
+</section>
+<section id="what-data-do-we-have" class="slide level2">
+<h2>What data do we have?</h2>
+<pre><code>## # A tibble: 4 x 5
+##   sport games num_teams home_wp implied_home_wp
+##   &lt;chr&gt; &lt;int&gt;     &lt;int&gt;   &lt;dbl&gt;           &lt;dbl&gt;
+## 1 mlb   26710        30   0.541           0.548
+## 2 nba   13245        30   0.595           0.615
+## 3 nfl    2542        32   0.563           0.589
+## 4 nhl   12990        30   0.548           0.565</code></pre>
+</section>
+<section id="section" class="slide level2 fullpage">
+<h2> </h2>
+<p><img src="UCSAS2019_files/figure-revealjs/markets-plot-1.png" width="960" /></p>
+</section>
+<section id="the-model-definitions" class="slide level2">
+<h2>The model: definitions</h2>
+<ul>
+<li><span class="math inline">\(p_{(q,s,k)ij} =\)</span> probability that team <span class="math inline">\(i\)</span> will beat team <span class="math inline">\(j\)</span> in season <span class="math inline">\(s\)</span> during week <span class="math inline">\(k\)</span> of sports league <span class="math inline">\(q\)</span>, for <span class="math inline">\(q \in \{MLB, NBA, NFL, NHL\}\)</span>.</li>
+<li><span class="math inline">\(\alpha_{q_{0}}\)</span> be the league-wide home advantage (HA) in <span class="math inline">\(q\)</span></li>
+<li><span class="math inline">\(\alpha_{(q) i^{\star}}\)</span> be the extra effect (+ or -) for team <span class="math inline">\(i\)</span> when playing at home</li>
+<li><span class="math inline">\(\theta_{(q,s,k) i}\)</span> and <span class="math inline">\(\theta_{(q, s, k) j}\)</span> be season-week team strength parameters</li>
+</ul>
+</section>
+<section id="the-model-assumptions" class="slide level2">
+<h2>The model &amp; assumptions</h2>
+<p><span class="math display">\[ E[\text{logit}(p_{(q,s,k) ij})] = \theta_{(q,s,k) i} - \theta_{(q, s, k) j} + \alpha_{q_0} + \alpha_{(q) i^{\star}} \]</span></p>
+<p>Assumptions:</p>
+<ol type="1">
+<li><span class="math inline">\(\sum_{i=1}^{t_{q}} \theta_{(q,s,k)i} = 0\)</span></li>
+<li><span class="math inline">\(E[\theta_{(i,q,s+1,1)}] = \gamma_{q, season} \theta_{(i, q,s,k)}\)</span></li>
+<li><span class="math inline">\(E[\theta_{(i,q,s,k+1)}] = \gamma_{q, week} \theta_{(i, q,s,k)}\)</span></li>
+<li><span class="math inline">\(\gamma_{q,week}\)</span> and <span class="math inline">\(\gamma_{q,season}\)</span> week/season level autogressive parameters</li>
+</ol>
+</section>
+<section id="the-model" class="slide level2">
+<h2>The Model</h2>
+<p>For sport <span class="math inline">\(q\)</span>, in season <span class="math inline">\(s\)</span>, in week <span class="math inline">\(k\)</span>:</p>
+<p><span class="math inline">\(logit(p_{(q,s,k)}) \sim N(\mathbf{\theta_{(q,s,k)}}\mathbf{X}_{q,s,k} + \alpha_{q_0}\mathbf{J}_{g_{q,s,k}} + \mathbf{\alpha}_{q}\mathbf{Z}_{q,s,k}, \sigma^{2}_{q,game}\mathbf{I}_{g_{(q,s,k)}})\)</span></p>
+<p><span class="math inline">\(\theta_{(q,s+1,1)} | \gamma_{q,seas}, \mathbf{\theta_{q,s,g_{q,s,.}}}, \sigma^{2}_{q,seas} \sim N(\gamma_{q,seas}\mathbf{\theta}_{(q,s,g_{q,s,.})},\sigma^{2}_{q,seas}I_{t_{q}})\)</span></p>
+<p><span class="math inline">\(\theta_{(q,s,k+1)} | \gamma_{q,week}, \mathbf{\theta_{q,s,k}}, \sigma^{2}_{q,week} \sim N(\gamma_{q,week}\mathbf{\theta}_{(q,s,k)},\sigma^{2}_{q,week}I_{t_{q}})\)</span></p>
+</section>
+<section id="priors" class="slide level2">
+<h2>Priors</h2>
+<ul>
+<li>For sport <span class="math inline">\(q\)</span>, for week <span class="math inline">\(k\)</span>=1 and season <span class="math inline">\(s\)</span>=1</li>
+<li>Team Strength: <span class="math inline">\(\theta_{(q,1,1)i} \sim N(0, \sigma^{2}_{q,season}), i \in 1, \ldots, t_{q}\)</span></li>
+<li>Home Field Advantage: <span class="math inline">\(\alpha_{(q)i^{\star}}\sim N(0,\sigma^{2}_{q,\alpha}), j \in 1, \ldots, t^{\star}_{q}\)</span></li>
+<li>Finally, we assume the following prior distributions: (Note: <span class="math inline">\(\tau^{2}_{q,.} = \frac{1}{\sigma^{2}_{q,.}}\)</span>)</li>
+</ul>
+<p><span class="math inline">\(\tau^{2}_{q,game} \sim Uniform(0,1000)\)</span> <span class="math inline">\(\alpha_{q} \sim N(0,10000)\)</span> <span class="math inline">\(\tau^{2}_{q,season} \sim Uniform(0,1000)\)</span> <span class="math inline">\(\gamma_{q,season} \sim Uniform(0,1)\)</span> <span class="math inline">\(\tau^{2}_{q,week} \sim Uniform(0,1000)\)</span> <span class="math inline">\(\gamma_{q,week} \sim Uniform(0,1.5)\)</span> <span class="math inline">\(\tau^{2}_{q,\alpha} \sim Uniform(0,1000)\)</span></p>
+</section>
+<section id="fitting-a-cross-sport-model" class="slide level2">
+<h2>Fitting a cross-sport model</h2>
+<ul>
+<li>Data
+<ul>
+<li>2006–2016 reg. season in MLB, NBA, NFL, NHL (Sports Insights) <!-- - Priors --> <!--     - Uniform (variance parameters) and Normal (team strength parameters) --></li>
+</ul></li>
+<li>Software
+<ul>
+<li><code>rjags</code> package in <strong>R</strong> statistical software</li>
+</ul></li>
+<li>Draws
+<ul>
+<li>20k iterations, 2k burn in, thin of 5</li>
+</ul></li>
+</ul>
+<!-- ## &nbsp; {.fullpage} -->
+<!-- ```{r sox-tigers} -->
+<!-- load(file.path(root, "data", "sox.tigers.rda")) -->
+<!-- sox.tigers %>% ggplot(aes(x = theta, fill = team)) +  -->
+<!--   geom_density(alpha = 0.5) + ylab("") + xlab("Team Strength (log odds scale)") +  -->
+<!--   scale_fill_manual("", values = c("#BD3039", "#FF6600"), labels = c("Tigers", "Red Sox"), breaks = c("Tigers", "Red Sox")) +  -->
+<!--   labs(title = "Posterior distribution of team strengths",  -->
+<!--        subtitle = "End of 2013 regular season")+   -->
+<!--   theme_grey(base_size = 15) -->
+<!-- ``` -->
+</section>
+<section id="section-1" class="slide level2 fullpage">
+<h2> </h2>
+<p><img src="UCSAS2019_files/figure-revealjs/full-spaghetti-1.png" width="960" /></p>
+</section>
+<section id="section-2" class="slide level2 fullpage">
+<h2> </h2>
+<p><img src="UCSAS2019_files/figure-revealjs/season-sigma-1.png" width="960" /></p>
+</section>
+<section id="section-3" class="slide level2 fullpage">
+<h2> </h2>
+<p><img src="UCSAS2019_files/figure-revealjs/week-sigma-1.png" width="960" /></p>
+</section>
+<section id="section-4" class="slide level2 fullpage">
+<h2> </h2>
+<p><img src="UCSAS2019_files/figure-revealjs/home-advantage-1.png" width="960" /></p>
+</section>
+<section id="section-5" class="slide level2 fullpage">
+<h2> </h2>
+<p><img src="UCSAS2019_files/figure-revealjs/unnamed-chunk-4-1.png" width="768" /></p>
+</section>
+<section id="playoffs" class="slide level2">
+<h2>Playoffs!!?!</h2>
+<div class="double">
+<div>
+<ul>
+<li class="fragment next">How often does the best team win in the playoffs?<br />
+</li>
+<li class="fragment next">How much randomness is there in the playoffs?</li>
+<li class="fragment next">How many games do we need to decide who is the better team?</li>
+</ul>
+</div>
+<div>
+<img src="data:image/jpeg;base64,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" class="one-col-image">
+</div>
+</div>
+</section>
+<section id="section-6" class="slide level2 fullpage">
+<h2> </h2>
+<p><img src="UCSAS2019_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" /></p>
+</section>
+<section id="section-7" class="slide level2 fullpage">
+<h2> </h2>
+<p><img src="UCSAS2019_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" /></p>
+</section>
+<section id="section-8" class="slide level2 fullpage">
+<h2> </h2>
+<p><img src="UCSAS2019_files/figure-revealjs/unnamed-chunk-7-1.png" width="960" /></p>
+</section>
+<section id="playoffs-1" class="slide level2">
+<h2>Playoffs</h2>
+<ul>
+<li class="fragment next">In order to achieve the same lack of parity as the NBA in a 16 team tournament:</li>
+<li class="fragment next">NFL would have to play 11 game series</li>
+<li class="fragment next">NHL would have to play 51 game series</li>
+<li class="fragment next">MLB would have to play 75 game series</li>
+<li class="fragment next">Conversely, the NBA would have to switch to an 8-team, single game tournament to get close to the actual parity in the other three sports.</li>
+</ul>
+<!-- ## &nbsp; { .fullpage } -->
+<!-- ```{r home-advantage-nba} -->
+<!-- load(file.path(root, "data", "tidy_alphas.R1.rda")) -->
+<!-- tidy_alpha_prob <- tidy_alphas %>% -->
+<!--   mutate(alpha_prob = mosaic::ilogit(alpha.team.overall),  -->
+<!--          top_half = alpha_prob < 0.58) -->
+<!-- tidy_alpha_summary <- tidy_alpha_prob %>% -->
+<!--   group_by(sport) %>% -->
+<!--   summarize(N = n(), median_ha = median(alpha_prob), max_ha = max(alpha_prob),  -->
+<!--             min_ha = min(alpha_prob)) %>% ungroup() %>%  -->
+<!--   filter(sport == "nba") -->
+<!-- gg4 <- ggplot(data = filter(tidy_alpha_prob, sport == "nba"),  -->
+<!--               aes(y = alpha_prob,  -->
+<!--                   x = reorder(team, alpha_prob))) +  -->
+<!--   geom_hline(data = filter(tidy_alpha_summary, sport == "nba"), alpha = 0.5, -->
+<!--              aes(yintercept = median_ha)) +  -->
+<!--   geom_hline(data = filter(tidy_alpha_summary, sport == "nba"), alpha = 0.5, -->
+<!--              aes(yintercept = max_ha)) +  -->
+<!--   geom_hline(data = filter(tidy_alpha_summary, sport == "nba"), alpha = 0.5, -->
+<!--              aes(yintercept = min_ha)) +  -->
+<!--   geom_errorbar(aes(ymin = mosaic::ilogit(alpha.team.lower),  -->
+<!--                     ymax = mosaic::ilogit(alpha.team.upper))) + -->
+<!--   geom_point() +  -->
+<!--   coord_flip() +  -->
+<!--   scale_x_discrete(NULL) +  -->
+<!--   scale_y_continuous("Probability of beating an equal caliber opponent at home",  -->
+<!--                      breaks = c(tidy_alpha_summary$min_ha, tidy_alpha_summary$median_ha, tidy_alpha_summary$max_ha), -->
+<!--                      labels = c(round(tidy_alpha_summary$min_ha, 3), -->
+<!--                                 round(tidy_alpha_summary$median_ha, 3), -->
+<!--                                 round(tidy_alpha_summary$max_ha, 3)), -->
+<!--                      minor_breaks = NULL) +   -->
+<!--   scale_colour_brewer(palette = "Spectral", "League") + -->
+<!--   ggtitle("Estimated Home Advantage in NBA") + -->
+<!--   theme_gray(12) -->
+<!-- gg4 -->
+<!-- ``` -->
+<!-- # Who cares? -->
+<!-- ## GMs need to predict the future -->
+<!-- <div class="double"> -->
+<!-- <img src="herm.png" class="one-col-image"> -->
+<!-- > - Our team strengths are better at predicting future W-L  -->
+<!-- > - Buyers or sellers at trade deadline? -->
+<!-- </div> -->
+<!-- ## GMs need to strategize -->
+<!-- <div class="double"> -->
+<!-- > - Patriots rest starters in 2015 against Dolphins -->
+<!-- > - Home advantage matters in 🏈 and 🏀 -->
+<!-- <img src="pats_dolphins.jpg" class="one-col-image"> -->
+<!-- </div> -->
+<!-- ## GMs need a longe-term plan -->
+<!-- > "They have to rethink their whole philosophy" -->
+<!-- **Mike Milbury on the 2016 Washington Capitals losing to Pittsburgh** -->
+<!-- > * There's an immense amount of luck involved in hockey. Rethinking your philosophy on a postseason series is ludicrous -->
+</section>
+<section id="summary" class="slide level2">
+<h2>Summary</h2>
+<ul>
+<li class="fragment next">Unpredictability at a fixed time: 🏑, ⚾</li>
+<li class="fragment next">Within season unpredictability: 🏈</li>
+<li class="fragment next">Between season unpredictability: 🏒</li>
+<li class="fragment next">Largest home advantage: 🏀</li>
+<li class="fragment next">Largest home advantage by sport:</li>
+<li class="fragment next">Rockies, Broncos, Nuggets, Flames</li>
+</ul>
+</section>
+<section id="how-often-does-the-best-team-win-1" class="slide level2">
+<h2>How often does the best team win?</h2>
+<p><img src="parity.png" style="width:800px; height=300px"></p>
+</section>
+<section id="acknowledgements-mike-and-ben" class="slide level2">
+<h2>Acknowledgements: Mike and Ben</h2>
+<div class="double">
+<div>
+<p><img src="https://daniels-pull-universityofdenv.netdna-ssl.com/assets/news-sports-analytics-symposium-mike-lopez-8-2019-300x200.jpg" class="one-col-image"></p>
+</div>
+<div>
+<p><img src="https://avatars3.githubusercontent.com/u/2774211?v=3" class="one-col-image"></p>
+</div>
+</div>
+</section>
+<section id="more-info" class="slide level2">
+<h2>More Info</h2>
+<ul>
+<li>Paper (<a href="https://arxiv.org/abs/1701.05976" class="uri">https://arxiv.org/abs/1701.05976</a>)</li>
+<li>Code (<a href="https://github.com/bigfour/competitiveness" class="uri">https://github.com/bigfour/competitiveness</a>)</li>
+<li>Slides ()</li>
+<li>Email: <a href="mailto:gmatthews1@luc.edu" class="email">gmatthews1@luc.edu</a></li>
+</ul>
+</section>
+
+  <!--
+  To hide progress bar from entire presentation
+  just remove “progress” element.
+  -->
+  <!-- <div class="progress"></div> -->
+  <script src="rmdshower/rmdshower/node_modules/shower/node_modules/shower-core/shower.min.js"></script>
+  <!-- Copyright © 2015 Yours Truly, Famous Inc. -->
+  <!-- Photos by John Carey, fiftyfootshadows.net -->
+
+    <script>renderMathInElement(document.body);</script>
+  
+  
+</body>
+</html>
